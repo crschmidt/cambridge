@@ -52,6 +52,11 @@ class RankedList(models.Model):
     def __str__(self):
         return self.name
 
+    def candidates(self):
+        if self.ordered == False:
+            return self.annotated_candidates.order_by("?")
+        return self.annotated_candidates
+
     def get_absolute_url(self):
         return reverse("list_explore", args=[self.slug])
 

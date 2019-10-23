@@ -82,7 +82,7 @@
                     </candidate>
                     {% endfor %}
                     {% else %}
-                    {% for element in object.annotated_candidates.all %}
+                    {% for element in object.candidates.all %}
                     <candidate class="list-group-item" data-slug="{{ element.candidate.slug }}">
                         <span aria-hidden="true"></span>
                         <dt>
