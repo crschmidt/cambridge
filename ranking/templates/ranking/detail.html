@@ -55,6 +55,7 @@
             <div class="col-md-12">
                 <div id="ranked_list" class="list-group">
                     {# help #}
+                    {% if annotations %}
                     {% for annotation, comment_form in annotations.items %}
                     <candidate class="list-group-item" data-slug="{{ annotation.candidate.slug }}">
                         <span aria-hidden="true"></span>
@@ -80,9 +81,28 @@
 
                     </candidate>
                     {% endfor %}
+                    {% else %}
+                    {% for element in object.annotated_candidates.all %}
+                    <candidate class="list-group-item" data-slug="{{ element.candidate.slug }}">
+                        <span aria-hidden="true"></span>
+                        <dt>
+                            {% if mine %}
+                                <i class="fas fa-bars"></i>
+                            {% endif %}
+                            {% if object.ordered %}<span class="counter"></span>{% endif %}
+                            <a href="{% url "candidate_detail" element.candidate.slug %}">
+                                {{ element.candidate.fullname}}
+                            </a>
+                        </dt>
+                        <dd>
+                            {{ element.comment|linebreaks }}
+                        </dd>
+                    </candidate>
+                    {% endfor %}
+                    {% endif %}
                 </div>
                 <div>
-                    {% if not annotations %}
+                    {% if not annotations and mine %}
                         <p>
                             You haven't picked any candidates yet! You can add them to your slate on their individual pages.
                         </p>
